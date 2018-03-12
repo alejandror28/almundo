@@ -21,7 +21,9 @@ public class Dispatcher extends Thread{
     private String llamada;
     private String telefono;
     private long sgIni;
+    private boolean atendida;
     private Empleado[] arregloEmp;
+    
     
     public Dispatcher(String llamada, String telefono, long sgIni){
         this.llamada = llamada;
@@ -55,9 +57,13 @@ public class Dispatcher extends Thread{
                 //Libera el hilo
                 getArregloEmp()[i].setLibre(true);
                 System.out.println(this.arregloEmp[i].getNombre()+" esta libre de la llamada>>"+this.llamada+"<< invirtiendo>>"+ (System.currentTimeMillis() - this.sgIni) / 1000 +" sg");
+                this.atendida = true;
                 stop();
             }
 	}
+        if (!this.atendida)
+            System.out.println("No hay operadores disponbles para atender llamada: "+this.llamada);
+        
     }
     
     /*
