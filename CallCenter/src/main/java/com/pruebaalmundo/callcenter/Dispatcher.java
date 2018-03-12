@@ -15,6 +15,7 @@ public class Dispatcher extends Thread{
     * llamada: Id para identificacion de la llamada
     * telefno: Telefono desde donde se realiza la llamada
     * sgIni: Fecha (con segundos) en la cual se recibe la llamada
+    * atendida: Variable para conocer si la llamada fue atendida
     * arregloEmp: Arreglo que contiene los empleados que pueden ser utilizados
     */
     
