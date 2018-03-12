@@ -1,15 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Clase que contiene la definicion del empleado call center
  */
 package com.pruebaalmundo.callcenter;
 
 /**
  *
- * @author User
+ * @author Pedro Alejandro Rojas Mesa
  */
+
 public class Empleado {
+    
+    /*
+    * libre: Indica si el empleado esta libre para recibir una llamada
+    * perfil: Perfil del empleado (Operador, Supervisor, Director)
+    * nombre: Nombre del empleado para identificacion
+    */
+    
     private Boolean libre;
     private String perfil;
     private String nombre;

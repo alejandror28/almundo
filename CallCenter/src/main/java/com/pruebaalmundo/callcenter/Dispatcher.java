@@ -1,60 +1,77 @@
 package com.pruebaalmundo.callcenter;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Clase para la asignacion de llamadas
  */
-
-
-//import com.pruebaalmundo.callcenter.VectorEmpleado;
 
 /**
  *
- * @author User
+ * @author Pedro Alejandro Rojas Mesa
  */
+
 public class Dispatcher extends Thread{
 
+    /*
+    * llamada: Id para identificacion de la llamada
+    * telefno: Telefono desde donde se realiza la llamada
+    * sgIni: Fecha (con segundos) en la cual se recibe la llamada
+    * arregloEmp: Arreglo que contiene los empleados que pueden ser utilizados
+    */
+    
     private String llamada;
     private String telefono;
-    private int tiempoLlamada;
     private long sgIni;
     private Empleado[] arregloEmp;
     
-    public Dispatcher(String llamada, String telefono, int tiempoLlamada, long sgIni){
+    public Dispatcher(String llamada, String telefono, long sgIni){
         this.llamada = llamada;
         this.telefono = telefono;
-        this.tiempoLlamada = tiempoLlamada;
         this.sgIni = sgIni;
         this.arregloEmp = VectorEmpleado.getarregloEmp();
     }
     
     @Override
-    public void run(){
+    public void run(){       
+        dispatchCall();
+    }
         
-        //Se recorre el vector para saber quien se encuentra libre
+    public void dispatchCall(){
+        
+        /*
+        * Numero aleatorio que asignara el tiempo de la llamada
+        * numero generado entre 5 y 10
+        */
+        int duracionLlamada = (int)Math.floor(Math.random()*(10-5+1)+5);
+        
+        //Se recorre el vector de empleados
         for (int i = 0; i < this.arregloEmp.length; i++) { 
+            //Valida si se encuentra libre
             if (this.arregloEmp[i].getLibre()){
+                //Configura el cliente ocupado
                 this.arregloEmp[i].setLibre(false);
-                System.out.println("Recibida llamada>>"+this.llamada+"<< Telefono>>"+this.telefono+"<<");
-                System.out.println("Llamada asignada a>>"+this.arregloEmp[i].getNombre()+"<< Con perfil>>"+this.arregloEmp[i].getPerfil()+"<<");
-                esperarXsegundos(tiempoLlamada);
+                System.out.println("Recibida llamada: "+this.llamada+" Telefono: "+this.telefono+" Llamada asignada a: "+this.arregloEmp[i].getNombre()+" Con perfil: "+this.arregloEmp[i].getPerfil()+" DuracionLlamada: "+duracionLlamada);
+                //Espera del hilo la cantidad de segundos del numero aleatorio
+                esperarXsegundos(duracionLlamada);
+                //Libera el hilo
                 getArregloEmp()[i].setLibre(true);
                 System.out.println(this.arregloEmp[i].getNombre()+" esta libre de la llamada>>"+this.llamada+"<< invirtiendo>>"+ (System.currentTimeMillis() - this.sgIni) / 1000 +" sg");
                 stop();
             }
-             
 	}
-        
     }
     
+    /*
+    * Metodo que pone a esperar el hilo la cantidad de tiempo indicada
+    * @param segundos: cantidad de segundos que se debe dormir el hilo
+    */
     private void esperarXsegundos(int segundos) {
-		try {
-			Thread.sleep(segundos * 1000);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
+        try {
+            Thread.sleep(segundos * 1000);
+        } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+        }
     }
+
     /**
      * @return the llamada
      */
@@ -110,20 +127,4 @@ public class Dispatcher extends Thread{
     public void setArregloEmp(Empleado[] arregloEmp) {
         this.arregloEmp = arregloEmp;
     }
-
-    /**
-     * @return the tiempoLlamada
-     */
-    public int getTiempoLlamada() {
-        return tiempoLlamada;
-    }
-
-    /**
-     * @param tiempoLlamada the tiempoLlamada to set
-     */
-    public void setTiempoLlamada(int tiempoLlamada) {
-        this.tiempoLlamada = tiempoLlamada;
-    }
-
-    
 }
