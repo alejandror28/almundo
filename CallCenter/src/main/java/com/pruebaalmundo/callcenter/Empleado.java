@@ -21,9 +21,9 @@ public class Empleado {
     private String nombre;
 
     public Empleado(Boolean libre, String perfil, String nombre){
-        setLibre(libre);
-        setPerfil(perfil);
-        setNombre(nombre);
+        this.libre = libre;
+        this.perfil = perfil;
+        this.nombre = nombre;
     }
     /**
      * @return the libre
